@@ -3,7 +3,7 @@ import pandas as pd
 import xml.etree.ElementTree as ET
 
 # Load the SVG file
-svg_file_path = "IMG_0543 test 4.svg"
+svg_file_path = "20250311 IMG_1989.svg"
 
 # Parse the SVG content
 tree = ET.parse(svg_file_path)
