@@ -5,14 +5,17 @@
 #define hall_pin 6  // Motor driver RPWM
 #define servo_pin 7  // Motor driver LPWM
 #define PPR 1300 // Pulses Per Revolution (Gearbox adjusted)
+//#define PPR 200 
 #define MAX_RPM 5700/40  // Motor free speed in RPM (gearbox adjusted)
 #include <Servo.h>
 
 Servo myServo; // Create a Servo object
 
 volatile long encoderTicks = 0;  // Encoder tick count
+//volatile long encoderTicks_after = 0;  // Encoder tick count
 volatile bool stopMotor = false; // Flag to signal stopping the motor
 volatile int lastStateA = LOW;    // Stores last known state of ENC_A
+const int extraTicks = 120; // Extra encoder ticks after stopping condition
 
 void setup() {
     pinMode(RPWM, OUTPUT);
@@ -41,6 +44,8 @@ void loop() {
             Serial.println("Motor rotating one full revolution...");
             
             encoderTicks = 0;  // Reset encoder count
+            //encoderTicks_after = 0;  // Reset encoder count
+
             stopMotor = false; // Reset stop flag
             
             // Start motor forward
@@ -54,6 +59,14 @@ void loop() {
               Serial.println("n:   " + String(digitalRead(hall_pin)));
 
           
+            }
+
+            //delay(100);
+            // Continue running for extra encoder ticks
+            long targetTicks = encoderTicks + extraTicks;
+            while (encoderTicks < targetTicks) {
+                delay(10);
+                Serial.println("Encoder Ticks (Extra Phase): " + String(encoderTicks));
             }
             
             // Stop the motor safely
@@ -91,7 +104,8 @@ void countEncoderTicks() {
     int stateN = digitalRead(hall_pin);
 
     if (stateN == 0) {
-      if (encoderTicks > PPR/2) {
+      if (encoderTicks > 200) {
+            //encoderTicks_after = encoderTicks + 100;
             stopMotor = true;  // Signal to stop the motor
       }
     
