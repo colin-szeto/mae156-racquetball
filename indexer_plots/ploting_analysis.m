@@ -18,10 +18,10 @@ figure;
 
 % Plot 1: Angle vs Time
 subplot(3,3,1)
-plot(mat1(1:180,1),mat1(1:180,2))
+plot(mat1(1:180,1),mat1(1:180,2),LineWidth=1.5)
 hold on
-plot([m_s m_s],[-40 100],'--')
-plot([m_s2 m_s2],[-40 100],'--',color='g')
+plot([m_s m_s],[-40 100],'--','LineWidth',1.5)
+plot([m_s2 m_s2],[-40 100],'--',color='g',LineWidth=1.5)
 
 ylabel('Angle')
 xlabel('Time (s)')
@@ -29,10 +29,10 @@ title('Circular Motion')
 
 % Plot 2: Vertical Acceleration vs Time
 subplot(3,3,2)
-plot(mat2(1:180,1),mat2(1:180,2))
+plot(mat2(1:180,1),mat2(1:180,2),LineWidth=1.5)
 hold on
-plot([m_s m_s],[-0.15 0.2],'--')
-plot([m_s2 m_s2],[-0.15 0.2],'--',color='g')
+plot([m_s m_s],[-0.15 0.2],'--','LineWidth',1.5)
+plot([m_s2 m_s2],[-0.15 0.2],'--',color='g',LineWidth=1.5)
 
 ylabel('Acceleration')
 xlabel('Time (s)')
@@ -40,10 +40,10 @@ title('Vertical Acceleration')
 
 % Plot 3: Tangential Acceleration vs Time
 subplot(3,3,3)
-plot(mat3(1:180,1),mat3(1:180,2))
+plot(mat3(1:180,1),mat3(1:180,2),LineWidth=1.5)
 hold on
-plot([m_s m_s],[-1.5 1.5],'--')
-plot([m_s2 m_s2],[-1.5 1.5],'--',color='g')
+plot([m_s m_s],[-1.5 1.5],'--',LineWidth=1.5)
+plot([m_s2 m_s2],[-1.5 1.5],'--',color='g',LineWidth=1.5)
 
 ylabel('Tan Accel')
 xlabel('Time (s)')
@@ -51,10 +51,10 @@ title('Tangential Acceleration')
 
 % Plot 4: Centripetal Acceleration vs Time
 subplot(3,3,4)
-plot(mat4(1:180,1),mat4(1:180,2))
+plot(mat4(1:180,1),mat4(1:180,2),LineWidth=1.5)
 hold on
-plot([m_s m_s],[0 0.9],'--')
-plot([m_s2 m_s2],[0 0.9],'--',color='g')
+plot([m_s m_s],[0 0.9],'--',LineWidth=1.5)
+plot([m_s2 m_s2],[0 0.9],'--',color='g',LineWidth=1.5)
 
 ylabel('Cen Accel')
 xlabel('Time (s)')
@@ -62,10 +62,10 @@ title('Centripetal Acceleration')
 
 % Plot 5: Angular Acceleration vs Time
 subplot(3,3,5)
-plot(mat5(1:180,1),mat5(1:180,2))
+plot(mat5(1:180,1),mat5(1:180,2),LineWidth=1.5)
 hold on
-plot([m_s m_s],[-5000 5000],'--')
-plot([m_s2 m_s2],[-5000 5000],'--',color='g')
+plot([m_s m_s],[-5000 5000],'--',LineWidth=1.5)
+plot([m_s2 m_s2],[-5000 5000],'--',color='g',LineWidth=1.5)
 
 ylabel('Ang Accel')
 xlabel('Time (s)')
@@ -73,10 +73,10 @@ title('Angular Acceleration')
 
 % Plot 6: Resultant Acceleration vs Time
 subplot(3,3,6)
-plot(mat6(1:180,1),mat6(1:180,2))
+plot(mat6(1:180,1),mat6(1:180,2),LineWidth=1.5)
 hold on
-plot([m_s m_s],[-0.1 1.75],'--')
-plot([m_s2 m_s2],[-0.1 1.75],'--',color='g')
+plot([m_s m_s],[-0.1 1.75],'--',LineWidth=1.5)
+plot([m_s2 m_s2],[-0.1 1.75],'--',color='g',LineWidth=1.5)
 
 ylabel('Res Accel')
 xlabel('Time (s)')
@@ -84,11 +84,11 @@ title('Resultant Acceleration')
 
 % Plot 7: Vertical Posititon vs Time
 subplot(3,3,7)
-plot(mat7(1:180,1),mat7(1:180,2))
+plot(mat7(1:180,1),mat7(1:180,2),LineWidth=1.5)
 hold on
 %plot([m_s m_s],[-0.1 1.75],'--')
-plot([m_s m_s],[4 5.5],'--')
-plot([m_s2 m_s2],[4 5.5],'--',color='g')
+plot([m_s m_s],[4 5.5],'--',LineWidth=1.5)
+plot([m_s2 m_s2],[4 5.5],'--',color='g',LineWidth=1.5)
 ylabel('Vertical Posititon (in)')
 xlabel('Time (s)')
 title('Vertical Posititon')

@@ -42,8 +42,8 @@ void loop() {
             stopMotor = false; // Reset stop flag
             
             // Start motor forward
-            analogWrite(RPWM, 255);  // Set speed
-            analogWrite(LPWM, 0);
+            analogWrite(RPWM, 0);  // Set speed
+            analogWrite(LPWM, 255); 
 
             // Wait until ISR signals to stop
             while (!stopMotor) {

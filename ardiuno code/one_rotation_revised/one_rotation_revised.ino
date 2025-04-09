@@ -2,7 +2,7 @@
 #define LPWM 7  // Motor driver LPWM
 #define ENC_A 2  // Encoder Channel A (Hall effect sensor)
 #define ENC_B 3  // Encoder Channel B (Hall effect sensor)
-#define PPR 268 // Pulses Per Revolution (Gearbox adjusted)
+#define PPR 805 // Pulses Per Revolution (Gearbox adjusted)
 #define MAX_RPM 5700/40  // Motor free speed in RPM (gearbox adjusted)
 
 volatile long encoderTicks = 0;  // Encoder tick count
@@ -33,8 +33,8 @@ void loop() {
             stopMotor = false; // Reset stop flag
             
             // Start motor forward
-            analogWrite(RPWM, 50);  // Set speed
-            analogWrite(LPWM, 0);
+            analogWrite(RPWM, 0);  // Set speed
+            analogWrite(LPWM, 255);
 
             // Wait until ISR signals to stop
             while (!stopMotor) {

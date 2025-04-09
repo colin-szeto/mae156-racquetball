@@ -54,7 +54,7 @@ while(cap.isOpened()):
                     
                 if len(approx) == 12: 
                     found_frames = found_frames + 1
-                    if found_frames > 5:
+                    if found_frames > 10:
                         cv2.drawContours(Gaussian, [contour], 0, (0, 0, 255), 5) 
                         cv2.putText(Gaussian, 'Plus', (x, y), 
                                     cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2) 
