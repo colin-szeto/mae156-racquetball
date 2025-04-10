@@ -13,7 +13,7 @@ M(end,:) = [];
 
 
 figure(1)
-scatter(M(:,1), M(:,2),MarkerFaceColor='blue')
+scatter3(M(:,1), M(:,2),M(:,3),MarkerFaceColor='green')
 hold on
 grid on 
 axis equal
@@ -23,8 +23,9 @@ title('Straight Barrel')
 
 x0 = mean(M(:,1));
 y0 = mean(M(:,2));
+z0 = mean(M(:,3));
 
-scatter(x0,y0,MarkerFaceColor='red')
+scatter3(x0,y0,z0,MarkerFaceColor='red')
 
 
 a = std(M(:,1));
@@ -40,18 +41,18 @@ yc = y0 + b * sin(theta);
 
 % Plot the ellipse
 
-plot(xc, yc, 'black--', 'LineWidth',2);  
+plot3(xc, yc, z0*ones(length(yc))','black--', 'LineWidth',2);  
 xlabel('horizontal spread [in]')
 ylabel('vertical spread [in]')
 
 str1 = sprintf('x spread: %0.5g \x00B1 %0.5g\ny spread: %0.5g \x00B1 %0.5g',0,a,y0,b)
 %sprintf('%0.5g + %0.5g',y0,b)
-legend({'points impact' 'mean' '1 std'})
+%legend({'points impact' 'mean' '1 std'})
 
 
-text(-4.5,15.5,str1)
+text(x0-a*4,y0,z0,str1)
 
-hold off
+%hold off
 
 %% 3 barrel
 filename = '20250408_3_barrel.csv';
@@ -64,17 +65,18 @@ M(1,:) = []; % remove first and second row
 M(end,:) = [];
 
 
-figure(2)
-scatter(M(:,1), M(:,2),MarkerFaceColor='blue')
+%figure(2)
+scatter3(M(:,1), M(:,2),M(:,3),MarkerFaceColor='blue')
 grid on 
 axis equal
 title('3 barrel')
-hold on
+%hold on
 
 x0 = mean(M(:,1));
 y0 = mean(M(:,2));
+z0 = mean(M(:,3));
 
-scatter(x0,y0,MarkerFaceColor='red')
+scatter3(x0,y0,z0,MarkerFaceColor='red')
 
 
 a = std(M(:,1));
@@ -90,15 +92,18 @@ yc = y0 + b * sin(theta);
 
 % Plot the ellipse
 
-plot(xc, yc, 'black--', 'LineWidth',2); 
+plot3(xc, yc,z0*ones(length(yc)), 'black--', 'LineWidth',2); 
 
 xlabel('horizontal spread [in]')
 ylabel('vertical spread [in]')
+zlabel('depth/range [in]')
 
 str1 = sprintf('x spread: %0.5g \x00B1 %0.5g\ny spread: %0.5g \x00B1 %0.5g',0,a,y0,b)
-legend({'points impact' 'mean' '1 std'})
+legend({'points impact straight' '' '' 'points impact 3 barrel' 'mean' '1 std'})
 
 %sprintf('%0.5g + %0.5g',y0,b)
 
-text(-1.25,6.8,str1)
+%text(-1.25,6.8,str1)
+text(x0-a*4,y0,z0,str1)
+
 hold off
