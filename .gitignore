@@ -2,6 +2,7 @@
 *.jpg
 *.dxf
 
+computer_vision/cvenv/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
