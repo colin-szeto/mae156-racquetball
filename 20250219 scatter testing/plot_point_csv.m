@@ -6,6 +6,7 @@ filename = '20250408_straight.csv';
 %load(filename)
 M = csvread(filename,1,0); % skipping the labels reading one row from the top
 M(:,1) = M(:,1) - 7.2098;
+%M(:,2) = M(:,2) + 7.480319; % hegiht difference between barrel and whiteboard (0,0) is a straight line from the barrel
 
 M(1,:) = []; % remove first and second row
 M(end,:) = [];
@@ -43,8 +44,10 @@ plot(xc, yc, 'black--', 'LineWidth',2);
 xlabel('horizontal spread [in]')
 ylabel('vertical spread [in]')
 
-str1 = sprintf('x spread: %0.5g + %0.5g\ny spread: %0.5g + %0.5g',0,a,y0,b)
+str1 = sprintf('x spread: %0.5g \x00B1 %0.5g\ny spread: %0.5g \x00B1 %0.5g',0,a,y0,b)
 %sprintf('%0.5g + %0.5g',y0,b)
+legend({'points impact' 'mean' '1 std'})
+
 
 text(-4.5,15.5,str1)
 
@@ -55,6 +58,7 @@ filename = '20250408_3_barrel.csv';
 %load(filename)
 M = csvread(filename,1,0); % skipping the labels reading one row from the top
 M(:,1) = M(:,1) -5.1245;
+%M(:,2) = M(:,2) +0.787402; % moving the 0,0 point up to barrel
 
 M(1,:) = []; % remove first and second row
 M(end,:) = [];
@@ -91,7 +95,9 @@ plot(xc, yc, 'black--', 'LineWidth',2);
 xlabel('horizontal spread [in]')
 ylabel('vertical spread [in]')
 
-str1 = sprintf('x spread: %0.5g + %0.5g\ny spread: %0.5g + %0.5g',0,a,y0,b)
+str1 = sprintf('x spread: %0.5g \x00B1 %0.5g\ny spread: %0.5g \x00B1 %0.5g',0,a,y0,b)
+legend({'points impact' 'mean' '1 std'})
+
 %sprintf('%0.5g + %0.5g',y0,b)
 
 text(-1.25,6.8,str1)
