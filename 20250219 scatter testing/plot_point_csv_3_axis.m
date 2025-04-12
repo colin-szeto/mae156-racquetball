@@ -51,7 +51,7 @@ for file_n =1:length(filename_array)
 
     plot3(z0*ones(length(yc)),xc, yc,'black--', 'LineWidth',2);  
 
-    str1 = sprintf('x spread: %0.5g \x00B1 %0.5g\ny spread: %0.5g \x00B1 %0.5g',x0,a,y0,b);
+    str1 = sprintf('x spread: %0.3g \x00B1 %0.3g\ny spread: %0.3g \x00B1 %0.3g\nz: %0.3g',x0,a,y0,b,z0);
     text(z0,x0-3,y0,str1)
 end
 hold off;
@@ -95,8 +95,8 @@ scatter3(x0,y0,z0,MarkerFaceColor='red')
 a = std(M(:,1));
 b = std(M(:,2));
 
-sprintf('%0.5g + %0.5g',x0,a)
-sprintf('%0.5g + %0.5g',y0,b)
+sprintf('%0.5g + %0.3g',x0,a)
+sprintf('%0.5g + %0.3g',y0,b)
 
 theta = linspace(0, 2*pi, 100); 
 
@@ -111,10 +111,10 @@ xlabel('horizontal spread [in]')
 ylabel('vertical spread [in]')
 zlabel('depth/range [in]')
 
-str1 = sprintf('x spread: %0.5g \x00B1 %0.5g\ny spread: %0.5g \x00B1 %0.5g',0,a,y0,b)
+str1 = sprintf('x spread: %0.3g \x00B1 %0.3g\ny spread: %0.3g \x00B1 %0.3g',0,a,y0,b)
 legend({'points impact straight' '' '' 'points impact 3 barrel' 'mean' '1 std'})
 
-%sprintf('%0.5g + %0.5g',y0,b)
+%sprintf('%0.5g + %0.3g',y0,b)
 
 %text(-1.25,6.8,str1)
 text(x0-3,y0,z0,str1)
