@@ -1,4 +1,4 @@
-% 3D Projectile Motion with Euler-Cromer Method (No Spin, Multiple Shots)
+% 3D Projectile Motion with Euler-Cromer Method (No Spin, Crosswind)
 clear; clc; close all;
 
 %-------------------------------
@@ -14,6 +14,13 @@ dt = 0.001;               % time step (s)
 t_max = 10;               % max simulation time (s)
 
 %-------------------------------
+% Crosswind
+%-------------------------------
+Vwind = 8.9408;  % wind velocity in Y-direction (m/s)
+% +ve = wind blowing in +Y direction
+% -ve = wind blowing in -Y direction
+
+%-------------------------------
 % Initial Velocity Sets [Horizontal, Vertical]
 %-------------------------------
 velocities = [
@@ -26,7 +33,7 @@ velocities = [
 colors = lines(size(velocities, 1)); % Different colors for each trajectory
 
 figure; hold on;
-title('3D Projectile Trajectories (No Spin, With Drag)');
+title('3D Projectile Trajectories (No Spin, With Drag and Crosswind)');
 xlabel('X (m)');
 ylabel('Y (m)');
 zlabel('Z (m)');
@@ -56,13 +63,18 @@ for i = 1:size(velocities, 1)
 
     % Euler-Cromer Integration Loop
     for n = 1:N-1
-        Vmag = sqrt(U(n)^2 + V(n)^2 + W(n)^2);
+        % Effective velocity relative to air (include crosswind in Y)
+        VrelX = U(n);
+        VrelY = V(n) - Vwind;  % wind acts opposite to projectile's motion in Y
+        VrelZ = W(n);
+        Vmag = sqrt(VrelX^2 + VrelY^2 + VrelZ^2);
+        
         fric_coeff = Cd * rho * A / (2 * m);
 
-        % Update velocities
-        U(n+1) = U(n) - dt * (fric_coeff * Vmag * U(n));
-        V(n+1) = V(n) - dt * (fric_coeff * Vmag * V(n));
-        W(n+1) = W(n) - dt * (fric_coeff * Vmag * W(n) - g);
+        % Update velocities (no Magnus effect)
+        U(n+1) = U(n) - dt * (fric_coeff * Vmag * VrelX);
+        V(n+1) = V(n) - dt * (fric_coeff * Vmag * VrelY);
+        W(n+1) = W(n) - dt * (fric_coeff * Vmag * VrelZ - g);
 
         % Update positions
         X(n+1) = X(n) + dt * U(n+1);
@@ -86,9 +98,7 @@ for i = 1:size(velocities, 1)
           'MarkerFaceColor', colors(i, :), 'Color', colors(i, :));
     
     % Legend entry
-    %legendEntries{end} = ' ';
     legendEntries{2*i -1} = sprintf('U=%.2f, W=%.2f, Lin Dist=%.2f', U0, W0, sqrt(X(end)^2 +Y(end)^2));
-    
 end
 
 legend(legendEntries, 'Location', 'northeast');

@@ -1,7 +1,7 @@
 import cv2 
 import numpy as np 
 
-image = cv2.imread('2025-02-16-151324 (242).jpg') 
+image = cv2.imread('142_2025-04-14-181010.jpg') 
 cv2.imshow('Original Image', image) 
 cv2.waitKey(0) 
 
