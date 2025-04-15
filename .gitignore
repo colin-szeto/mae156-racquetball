@@ -1,6 +1,7 @@
 *.webm
 *.jpg
 *.dxf
+*.pt
 
 computer_vision/cvenv/
 
