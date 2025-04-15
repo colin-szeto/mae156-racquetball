@@ -2,6 +2,7 @@
 *.jpg
 *.dxf
 *.pt
+*avi
 
 computer_vision/cvenv/
 
