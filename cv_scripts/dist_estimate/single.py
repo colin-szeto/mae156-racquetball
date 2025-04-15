@@ -4,16 +4,17 @@ import glob
 import math
 
 # Load the image
-fname = "2025-04-14-181010_142.jpg"
+fname = "2025-02-16-151324 (242).jpg"
 image = cv2.imread(fname)
 print(fname)
 hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
 ### === BLACK DETECTION === ###
 lower_black = np.array([0, 0, 0])
-upper_black = np.array([180, 50, 100])
+upper_black = np.array([180, 80, 120])
 mask_black = cv2.inRange(hsv, lower_black, upper_black)
-
+cv2.imshow("mask_black", mask_black)
+cv2.waitKey(0)
 ### === WHITE DETECTION === ###
 lower_white = np.array([0, 0, 180])
 upper_white = np.array([180, 60, 255])
@@ -61,10 +62,10 @@ for cnt in contours_white:
         if len(approx) >= 4:
             x, y, w, h = cv2.boundingRect(cnt)
             aspect_ratio = float(w) / h
-            # if 0.9 < aspect_ratio < 1.1:  # optional: check for square
-            cv2.drawContours(image, [cnt], -1, (0, 255, 255), 3)
-            cv2.rectangle(image, (x, y), (x+w, y+h), (0, 0, 255), 2)
-            cv2.putText(image, 'White Square', (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
+            if 0.9 < aspect_ratio < 1.1:  # optional: check for square
+                cv2.drawContours(image, [cnt], -1, (0, 255, 255), 3)
+                cv2.rectangle(image, (x, y), (x+w, y+h), (0, 0, 255), 2)
+                cv2.putText(image, 'White Square', (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
 
             # Compute centroid
             M = cv2.moments(cnt)
