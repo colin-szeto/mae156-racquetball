@@ -91,5 +91,7 @@ for i = 1:size(velocities, 1)
     
 end
 
+plot3([1,1],[0,0],[0,2.5],'--b','LineWidth',2)
+
 legend(legendEntries, 'Location', 'northeast');
 axis equal;

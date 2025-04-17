@@ -2,10 +2,10 @@ from ultralytics import YOLO
 import cv2
 
 # Load a YOLO model – you can use 'yolov8n.pt', 'yolov8s.pt', etc.
-model = YOLO("best_real.pt")  # Make sure you download or provide the correct path
+model = YOLO("best_try2.pt")  # Make sure you download or provide the correct path
 
 # Load image
-img_path = "2025-03-15-174301.jpg"
+img_path = "2025-04-14-181653_34.jpg"
 image = cv2.imread(img_path)
 
 # Inference

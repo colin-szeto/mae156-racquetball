@@ -3,6 +3,9 @@ close all; clear; clc;
 % objective: plot points from csv file of columns x and y
 
 filename_array = {'20250408_straight.csv','20250408_3_barrel.csv'};
+% z0,x0,y0 (meters)
+offset_launch = {[0, 7.21*0.0254,0.19], [0,5.12*0.0254,0.02]}
+%offset_launch = {[10, -7.21*0.0254,0], [0.02,-5.12*0.0254,0]}
 
 colors = [
    % 1.0, 0.0, 0.0;  % Red
@@ -17,10 +20,15 @@ colors = [
 figure(1)
 hold on
 for file_n =1:length(filename_array)
+    % Assuming offset_launch{file_n} = [z_o, x_o, y_o]
+    temp_offset = offset_launch{file_n};
+    z_o = temp_offset(1);
+    x_o = temp_offset(2);
+    y_o = temp_offset(3);
     %load(filename)
 
     filename  = filename_array{file_n};
-    M = csvread(filename,1,0); % skipping the labels reading one row from the top
+    M = csvread(filename,1,0)*0.0254; % skipping the labels reading one row from the top
 
     %M(:,1) = M(:,1) - 7.2098;
     M(1,:) = []; % remove first and second row
@@ -52,14 +60,39 @@ for file_n =1:length(filename_array)
     plot3(z0*ones(length(yc)),xc, yc,'black--', 'LineWidth',2);  
 
     str1 = sprintf('x spread: %0.3g \x00B1 %0.3g\ny spread: %0.3g \x00B1 %0.3g\nz: %0.3g',x0,a,y0,b,z0);
-    text(z0,x0-3,y0,str1)
+    text(z0,x0-3*0.0254,y0,str1)
+
+    %computeInitialVelocity3DPlot(z0,x0,y0)
+    %computeInitialVelocity3DPlot_w_offset(z0, x0, y0, z_o,x_o,y_o)
 end
 hold off;
 
+% === Axis Limits Based on Offset ===
+offset = 0.05;  % change this value as needed
+
+% Collect all x, y, z values from all files
+all_x = []; all_y = []; all_z = [];
+
+for file_n = 1:length(filename_array)
+    filename = filename_array{file_n};
+    M = csvread(filename,1,0)*0.0254; 
+    M(1,:) = []; 
+    M(end,:) = [];
+
+    all_z = [all_x; M(:,1)];
+    all_x = [all_y; M(:,2)];
+    all_y = [all_z; M(:,3)];
+end
+
+xlim([min(all_x)-offset, max(all_x)+offset])
+ylim([min(all_y)-offset, max(all_y)+offset])
+zlim([min(all_z)-offset, max(all_z)+offset])
+
 title('Straight Barrel')
-xlabel('depth spread [in]')
-ylabel('horizontal spread [in]')
-zlabel('vertical spread [in]')
+xlabel('depth [m] z')
+ylabel('horizontal spread [m] x')
+zlabel('vertical spread [m] y')
+
 
 
 %
