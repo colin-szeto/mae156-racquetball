@@ -3,6 +3,7 @@
 *.dxf
 *.pt
 *avi
+*.lnk
 
 computer_vision/cvenv/
 
