@@ -4,6 +4,7 @@
 *.pt
 *avi
 *.lnk
+*.mp4
 
 computer_vision/cvenv/
 
