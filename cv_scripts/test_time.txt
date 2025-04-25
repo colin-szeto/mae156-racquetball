@@ -1,0 +1,11 @@
+import datetime
+start = datetime.datetime.now()
+ 
+'''
+some elegant, complex code that takes a non-trivial amount of
+time to run, and you're trying to optimize it
+'''
+ 
+end = datetime.datetime.now()
+print start-end
+print "This took me %s seconds" %(end-start)

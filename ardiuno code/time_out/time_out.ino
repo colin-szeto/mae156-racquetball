@@ -17,6 +17,8 @@ volatile bool stopMotor = false; // Flag to signal stopping the motor
 volatile int lastStateA = LOW;    // Stores last known state of ENC_A
 const int extraTicks = 0; // Extra encoder ticks after stopping condition
 
+unsigned long motorStartTime = 0;  // To store the time when the motor started
+
 void setup() {
     pinMode(RPWM, OUTPUT);
     pinMode(LPWM, OUTPUT);
@@ -31,7 +33,7 @@ void setup() {
 
     Serial.begin(9600);  // Initialize Serial Monitor
     Serial.println("Press 'A' to rotate motor one full revolution. G to fire (actuate the servo)");
-    
+
     // Attach interrupt for encoder channel A
     attachInterrupt(digitalPinToInterrupt(ENC_A), countEncoderTicks, CHANGE);
 }
@@ -41,45 +43,37 @@ void loop() {
         char command = Serial.read();  // Read input
         
         if (command == 'A' || command == 'a') {  // If 'A' key is pressed
-  
-            //Serial.println("ensuring the launcher is extended");
-                        
-
-            //myServo.write(95);   // Move to 0 degrees
-            //delay(1000);        // Wait 1 second
-            //myServo.write(65);  // Move to 90 degrees
-            //delay(1000);        // Wait 1 second
-            //myServo.write(95); // Move to 180 degrees
-            //delay(1000);        // Wait 1 second
-            
             Serial.println("Motor rotating one full revolution...");
             
             encoderTicks = 0;  // Reset encoder count
-            //encoderTicks_after = 0;  // Reset encoder count
-
             stopMotor = false; // Reset stop flag
+
+            motorStartTime = millis();  // Store the time when motor starts
             
             // Start motor forward
             analogWrite(RPWM, 0);  // Set speed
             analogWrite(LPWM, 255);
 
-            // Wait until ISR signals to stop
+            // Wait until ISR signals to stop or 2 seconds timeout
             while (!stopMotor) {
                 delay(10);  // Small delay to allow encoder updates
-              Serial.println(String(encoderTicks));
-              Serial.println("n:   " + String(digitalRead(hall_pin)));
-
-          
+                Serial.println(String(encoderTicks));
+                Serial.println("n:   " + String(digitalRead(hall_pin)));
+                
+                // Check if 2 seconds have passed
+                if (millis() - motorStartTime > 2000) {  // 2000 milliseconds = 2 seconds
+                    Serial.println("Timeout reached. Stopping motor.");
+                    stopMotor = true;  // Stop the motor after 2 seconds
+                }
             }
 
-            //delay(100);
             // Continue running for extra encoder ticks
             long targetTicks = encoderTicks + extraTicks;
             while (encoderTicks < targetTicks) {
                 delay(10);
                 Serial.println("Encoder Ticks (Extra Phase): " + String(encoderTicks));
             }
-            
+
             // Stop the motor safely
             analogWrite(RPWM, 0);
             analogWrite(LPWM, 0);
@@ -87,9 +81,8 @@ void loop() {
             Serial.println("Press 'A' to rotate motor one full revolution. G to fire (actuate the servo)");
         }
         
-    if (command == 'g' || command == 'G') {  // If 
+        if (command == 'g' || command == 'G') {  // If 'g' key is pressed
             Serial.println("servo run");
-                        
 
             myServo.write(95);   // Move to 0 degrees
             delay(1000);        // Wait 1 second
@@ -99,11 +92,8 @@ void loop() {
             delay(1000);        // Wait 1 second
 
             Serial.println("servo complete.");
-
         }
-        
     }
-    
 }
 
 // ISR: Interrupt Service Routine for encoder counting
@@ -115,10 +105,8 @@ void countEncoderTicks() {
 
     if (stateN == 0) {
       if (encoderTicks > 200) {
-            //encoderTicks_after = encoderTicks + 100;
             stopMotor = true;  // Signal to stop the motor
       }
-    
     }
 
     if (stateA != lastStateA) { // Only count when state changes
