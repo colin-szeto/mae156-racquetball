@@ -5,7 +5,7 @@ clc;
 % Load CSV data
 data = readtable('sharpie_rotation_data_og.csv');
 
-upper_bound = 1200
+upper_bound = 1000
 % Extract and smooth
 t = data.time(1:1:upper_bound);
 x = movmean(data.centroid_x(1:1:upper_bound), 20);

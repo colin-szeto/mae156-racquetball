@@ -41,6 +41,21 @@ void loop() {
         char command = Serial.read();  // Read input
         
         if (command == 'A' || command == 'a') {  // If 'A' key is pressed
+            Serial.println("servo run");
+            myServo.write(95);   // Move to 0 degrees
+            delay(1000);        // Wait 1 second
+            myServo.write(65);  // Move to 90 degrees
+            delay(1000);        // Wait 1 second
+            myServo.write(95); // Move to 180 degrees
+            delay(1000);        // Wait 1 second
+
+            
+            myServo.write(95);   // Move to 0 degrees
+            delay(1000);        // Wait 1 second
+            myServo.write(65);  // Move to 90 degrees
+            delay(1000);        // Wait 1 second
+            myServo.write(95); // Move to 180 degrees
+            delay(1000);        // Wait 1 second
             Serial.println("Motor rotating one full revolution...");
             
             encoderTicks = 0;  // Reset encoder count
@@ -82,12 +97,17 @@ void loop() {
 
             myServo.write(95);   // Move to 0 degrees
             delay(1000);        // Wait 1 second
-
             myServo.write(65);  // Move to 90 degrees
             delay(1000);        // Wait 1 second
             myServo.write(95); // Move to 180 degrees
             delay(1000);        // Wait 1 second
 
+            myServo.write(95);   // Move to 0 degrees
+            delay(1000);        // Wait 1 second
+            myServo.write(65);  // Move to 90 degrees
+            delay(1000);        // Wait 1 second
+            myServo.write(95); // Move to 180 degrees
+            delay(1000);        // Wait 1 second
             Serial.println("servo complete.");
 
         }
