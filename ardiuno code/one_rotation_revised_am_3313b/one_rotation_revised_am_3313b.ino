@@ -15,7 +15,7 @@ volatile long encoderTicks = 0;  // Encoder tick count
 //volatile long encoderTicks_after = 0;  // Encoder tick count
 volatile bool stopMotor = false; // Flag to signal stopping the motor
 volatile int lastStateA = LOW;    // Stores last known state of ENC_A
-const int extraTicks = 100; // Extra encoder ticks after stopping condition
+const int extraTicks = 0; // Extra encoder ticks after stopping condition
 
 void setup() {
     pinMode(RPWM, OUTPUT);
@@ -42,7 +42,7 @@ void loop() {
         
         if (command == 'A' || command == 'a') {  // If 'A' key is pressed
             Serial.println("servo run");
-            myServo.write(95);   // Move to 0 degrees
+            /*myServo.write(95);   // Move to 0 degrees
             delay(1000);        // Wait 1 second
             myServo.write(65);  // Move to 90 degrees
             delay(1000);        // Wait 1 second
@@ -56,6 +56,7 @@ void loop() {
             delay(1000);        // Wait 1 second
             myServo.write(95); // Move to 180 degrees
             delay(1000);        // Wait 1 second
+           */
             Serial.println("Motor rotating one full revolution...");
             
             encoderTicks = 0;  // Reset encoder count
@@ -101,13 +102,14 @@ void loop() {
             delay(1000);        // Wait 1 second
             myServo.write(95); // Move to 180 degrees
             delay(1000);        // Wait 1 second
-
+/*
             myServo.write(95);   // Move to 0 degrees
             delay(1000);        // Wait 1 second
             myServo.write(65);  // Move to 90 degrees
             delay(1000);        // Wait 1 second
             myServo.write(95); // Move to 180 degrees
             delay(1000);        // Wait 1 second
+            */
             Serial.println("servo complete.");
 
         }

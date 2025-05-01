@@ -1,4 +1,4 @@
-function v0 = computeInitialVelocity3DPlot_w_offset(x, y, z, x_offset, y_offset, z_offset,color)
+function v0 = computeInitialVelocity3DPlot_w_offset(x, y, z, x_offset, y_offset, z_offset)
 % computeInitialVelocity3DPlot_w_offset(x, y, z, x_offset, y_offset, z_offset)
 % x, y, z = target position in space
 % x_offset, y_offset, z_offset = launcher origin position
@@ -49,7 +49,7 @@ function v0 = computeInitialVelocity3DPlot_w_offset(x, y, z, x_offset, y_offset,
     horizontal_range = sqrt((impact_x - x_offset)^2 + (impact_y - y_offset)^2);
 
     % === Plot Trajectory and Target ===
-    h = plot3(x_t, y_t, z_t, '--', 'LineWidth', 2, 'Color', color); hold on;
+    plot3(x_t, y_t, z_t, 'k--', 'LineWidth', 1); hold on;
     plot3(x, y, z, 'ro', 'MarkerSize', 10, 'LineWidth', 2);  % target point
 
     % === Print Results ===
@@ -58,7 +58,4 @@ function v0 = computeInitialVelocity3DPlot_w_offset(x, y, z, x_offset, y_offset,
     fprintf('Resultant speed: %.2f m/s\n', norm(v0));
     fprintf('Impact point at z=%.2f m: [x, y] = [%.2f, %.2f] m\n', z_offset, impact_x, impact_y);
     fprintf('Horizontal distance from origin to impact point: %.2f m\n', horizontal_range);
-
-    v0 = h; % return handle for legend
-
 end

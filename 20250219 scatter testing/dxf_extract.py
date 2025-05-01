@@ -29,8 +29,8 @@ def save_points_to_csv(points, output_file):
 
 # Example usage
 if __name__ == "__main__":
-    dxf_file = "short w mag.dxf"  # Input DXF file
-    csv_file = "short w mag.csv"  # Output CSV file
+    dxf_file = "20250430.dxf"  # Input DXF file
+    csv_file = "20250430.csv"  # Output CSV file
 
     points = extract_points_from_dxf(dxf_file)
     save_points_to_csv(points, csv_file)

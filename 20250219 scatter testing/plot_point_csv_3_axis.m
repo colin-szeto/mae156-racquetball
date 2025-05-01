@@ -2,19 +2,29 @@ close all; clear; clc;
 
 % objective: plot points from csv file of columns x and y
 
-filename_array = {'20250408_straight.csv','20250408_3_barrel.csv'};
+filename_array = {'trajectory_points_original.csv','20250408_3_barrel.csv','20250408_straight.csv','20250430.csv','short w mag.csv','long barrel.csv','short w_o mag.csv'}; %,'20250408_3_barrel.csv'
 % z0,x0,y0 (meters)
-offset_launch = {[0, 7.21*0.0254,0.19], [0,5.12*0.0254,0.02]}
+offset_launch = {[0, 7.21*0.0254,0.19],[0, 7.21*0.0254,0.19],[0, 7.21*0.0254,0.19], [0,5.12*0.0254,0.19], [0 0 0.19], [0 0 0.19], [0 0 0.19]} %, [0 0 0]
 %offset_launch = {[10, -7.21*0.0254,0], [0.02,-5.12*0.0254,0]}
 
+legend_labels = {'original','3 barrel', 'Straight Barrel', 'April 30', 'Short w/ Mag', 'Long Barrel', 'Short w/o Mag'};
+plot_handles = gobjects(length(filename_array), 1); % Preallocate for plot handles
+
+
 colors = [
-   % 1.0, 0.0, 0.0;  % Red
-    0.0, 1.0, 0.0;  % Green
-    0.0, 0.0, 1.0;  % Blue
-    1.0, 1.0, 0.0;  % Yellow
-    1.0, 0.0, 1.0;  % Magenta
-    0.0, 1.0, 1.0   % Cyan
+    0.0, 1.0, 0.0;    % Green
+    0.0, 0.0, 1.0;    % Blue
+    1.0, 0.75, 0.0;   % Amber
+    1.0, 0.0, 1.0;    % Magenta
+    0.0, 1.0, 1.0;    % Cyan
+    1.0, 0.0, 0.0;    % Red
+    0.5, 0.0, 1.0;    % Purple
+    0.5, 0.5, 0.0;    % Olive
+    0.25, 0.75, 0.5;  % Teal green
+    0.85, 0.33, 0.1;  % Orange-brown
+    0.6, 0.6, 0.6;    % Gray
 ];
+
 
 
 figure(1)
@@ -41,7 +51,7 @@ for file_n =1:length(filename_array)
     % plotting points of impact
     scatter3(z,x,y, 'MarkerFaceColor', colors(file_n,:)); hold on;
     grid on 
-    axis equal
+    %axis equal
     % plotting center point
     x0 = mean(M(:,1));
     y0 = mean(M(:,2));
@@ -59,11 +69,12 @@ for file_n =1:length(filename_array)
 
     plot3(z0*ones(length(yc)),xc, yc,'black--', 'LineWidth',2);  
 
-    str1 = sprintf('x spread: %0.3g \x00B1 %0.3g\ny spread: %0.3g \x00B1 %0.3g\nz: %0.3g',x0,a,y0,b,z0);
+    str1 = sprintf('x spread: %0.3g \x00B1 %0.3g\ny spread: %0.3g \x00B1 %0.3g\nz: %0.3g',x0,a,y0,b,z0)
     text(z0,x0-3*0.0254,y0,str1)
 
     %computeInitialVelocity3DPlot(z0,x0,y0)
-    %computeInitialVelocity3DPlot_w_offset(z0, x0, y0, z_o,x_o,y_o)
+    % Store handle to trajectory for legend
+    plot_handles(file_n) = computeInitialVelocity3DPlot_w_offset(z0, x0, y0, z_o,x_o,y_o,colors(file_n,:));
 end
 hold off;
 
@@ -88,10 +99,11 @@ xlim([min(all_x)-offset, max(all_x)+offset])
 ylim([min(all_y)-offset, max(all_y)+offset])
 zlim([min(all_z)-offset, max(all_z)+offset])
 
-title('Straight Barrel')
+%title('Straight Barrel')
 xlabel('depth [m] z')
 ylabel('horizontal spread [m] x')
 zlabel('vertical spread [m] y')
+legend(plot_handles, legend_labels, 'Location', 'best');
 
 
 
