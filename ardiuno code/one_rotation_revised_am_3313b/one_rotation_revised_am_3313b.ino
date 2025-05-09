@@ -15,7 +15,7 @@ volatile long encoderTicks = 0;  // Encoder tick count
 //volatile long encoderTicks_after = 0;  // Encoder tick count
 volatile bool stopMotor = false; // Flag to signal stopping the motor
 volatile int lastStateA = LOW;    // Stores last known state of ENC_A
-const int extraTicks = 0; // Extra encoder ticks after stopping condition
+const int extraTicks = 100; // Extra encoder ticks after stopping condition10
 
 void setup() {
     pinMode(RPWM, OUTPUT);
