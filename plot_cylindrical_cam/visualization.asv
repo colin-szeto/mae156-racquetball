@@ -1,0 +1,105 @@
+clear; 
+close all; 
+clc; 
+
+load('dxf_arcs.mat')
+load('dxf_lines.mat')
+
+offset_all =  49.8728;
+
+% Plotting
+figure; hold on;% axis equal;
+for k = 1:length(lines)
+    l = lines_struct;
+    plot([l.x1+offset_all l.x2+offset_all], [l.y1 l.y2], 'g-');
+end
+
+for k = 1:length(arcs)
+    a = arcs(k);
+    theta = linspace(deg2rad(a.start_angle), deg2rad(a.end_angle), 100);
+    x = a.cx + a.r * cos(theta);
+    y = a.cy + a.r * sin(theta);
+    plot(x+offset_all, y, 'r-');
+    max(abs(x))
+    min(abs(x))
+
+    max(abs(y))
+    min(abs(y))
+
+end
+
+plot([-16.6243+offset_all -16.6243+offset_all], [50.4825 12.3825])
+
+x_offset =49.8728-16.6243+offset_all
+
+for k = 1:length(lines)
+    l = lines_struct;
+    plot([l.x1+x_offset l.x2+x_offset], [l.y1 l.y2], 'g-');
+end
+
+for k = 1:length(arcs)
+    a = arcs(k);
+    theta = linspace(deg2rad(a.start_angle), deg2rad(a.end_angle), 100);
+    x = a.cx + a.r * cos(theta);
+    y = a.cy + a.r * sin(theta);
+    plot(x+x_offset, y, 'r-');
+end
+plot([-16.6243+x_offset -16.6243+x_offset], [50.4825 12.3825])
+
+x_offset =2*(49.8728-16.6243)+offset_all
+
+for k = 1:length(lines)
+    l = lines_struct;
+    plot([l.x1+x_offset l.x2+x_offset], [l.y1 l.y2], 'g-');
+end
+
+for k = 1:length(arcs)
+    a = arcs(k);
+    theta = linspace(deg2rad(a.start_angle), deg2rad(a.end_angle), 100);
+    x = a.cx + a.r * cos(theta);
+    y = a.cy + a.r * sin(theta);
+    plot(x+x_offset, y, 'r-');
+
+    disp('max x')
+end
+plot([-16.6243+x_offset -16.6243+x_offset], [50.4825 12.3825])
+
+disp(-16.6243+x_offset )
+
+t = title('DXF Plot');
+
+xl = xlabel('X');
+
+% Get current position of xlabel
+pos = get(xl, 'Position');
+
+% Move it downward by decreasing the y-position
+pos(2) = pos(2) - 0.5;  % adjust this value as needed
+set(xl, 'Position', pos);
+ylabel('linear travel');
+grid on
+hold off
+set(gca, 'XTick', []);  % Completely remove X ticks
+
+
+pos = get(t, 'Position');
+pos(2) = pos(2) + 1;  % Increase Y to move title upward
+set(t, 'Position', pos);
+
+% Create top x-axis
+ax1 = gca;
+ax1_pos = ax1.Position; % position of bottom axis
+
+% Create a new invisible axis on top
+ax2 = axes('Position', ax1_pos,...
+           'XAxisLocation','bottom',...
+           'YAxisLocation','right',...
+           'Color','none');
+
+% Set custom x-ticks or label for top axis
+xl = xlim(gca);
+xticks = linspace(xl(1), xl(2), 7);
+set(gca, 'XTick', xticks);
+
+ax2.XTickLabel = {0:60:360};
+ax2.YTick = []; % hide Y-axis ticks

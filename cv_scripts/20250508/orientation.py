@@ -44,11 +44,66 @@ def find_contours(mask, frame, shape_name='black'):
             approx = cv2.approxPolyDP(cnt, 0.02 * cv2.arcLength(cnt, True), True)
 
             if shape_name == 'black' and len(approx) == 12:
-                print("approx: {}".format(approx))
-                for pt in approx:
-                    center = tuple(pt.ravel())
-                    cv2.circle(frame, center, 5, (255, 0, 255), -1)
+                # printing points at the corners of the plus
 
+                # Convert approx points (OpenCV format) to a flat list of (x, y) tuples
+                print("approx:", approx)
+                points = [tuple(pt.ravel()) for pt in approx]
+
+                points_sorted = sorted(points, key=lambda p: p[0])
+
+                # Group by x-value similarity (within 20 units)
+                groups = []
+                current_group = [points_sorted[0]]
+
+                for point in points_sorted[1:]:
+                    if abs(point[0] - current_group[-1][0]) <= 20:
+                        current_group.append(point)
+                    else:
+                        groups.append(current_group)
+                        current_group = [point]
+
+                # Append the final group
+                groups.append(current_group)
+
+                # Ensure each group is sorted by x-value
+                for group in groups:
+                    group.sort(key=lambda point: point[0])
+
+                # Filter out groups with fewer than 2 points
+                filtered_groups = [group for group in groups if len(group) >= 2]
+
+                # Sort remaining groups by their length (ascending)
+                groups_sorted_by_size = sorted(filtered_groups, key=lambda g: len(g))
+
+                # Get the two smallest valid groups
+                smallest_two_groups = groups_sorted_by_size[:2]
+
+
+                # Print them
+                for i, group in enumerate(smallest_two_groups, start=1):
+                    try:
+                        values_diff = group
+                        # Extract second values (y-coordinates)
+                        y1 = values_diff[0][1]
+                        y2 = values_diff[1][1]
+
+                        # Calculate the difference
+                        difference = abs(y2 - y1)
+                    except: 
+                        difference = False
+                        
+                    print(f"Smallest Group {i} (size {len(group)}): {group} y difference: {difference}")
+                    
+                for points in smallest_two_groups[0]:
+                    cv2.circle(frame, points, 8, (235, 174, 52), -1)
+                    
+               
+                
+                for points in smallest_two_groups[-1]:
+                    cv2.circle(frame, points, 8, (248, 3, 252), -1)
+
+                
                 M = cv2.moments(cnt)
                 if M['m00'] != 0:
                     c_x = int(M['m10'] / M['m00'])

@@ -7,8 +7,8 @@ filename_array = {'trajectory_points_original.csv','20250408_3_barrel.csv','2025
 offset_launch = {[0, 7.21*0.0254,0.19],[0, 7.21*0.0254,0.19],[0, 7.21*0.0254,0.19], [0,5.12*0.0254,0.19], [0 0 0.19], [0 0 0.19], [0 0 0.19]} %, [0 0 0]
 %offset_launch = {[10, -7.21*0.0254,0], [0.02,-5.12*0.0254,0]}
 
-legend_labels = {'original','3 barrel', 'Straight Barrel', 'April 30', 'Short w/ Mag', 'Long Barrel', 'Short w/o Mag'};
-plot_handles = gobjects(length(filename_array), 1); % Preallocate for plot handles
+legend_labels = {'original','3 barrel', 'Straight Barrel', 'April 30', 'Short w/ Mag', 'Long Barrel', 'Short w/o Mag','vertical limit black target vessel','minimum range'};
+plot_handles = gobjects(length(filename_array) +2, 1); % Preallocate for plot handles
 
 
 colors = [
@@ -70,12 +70,19 @@ for file_n =1:length(filename_array)
     plot3(z0*ones(length(yc)),xc, yc,'black--', 'LineWidth',2);  
 
     str1 = sprintf('x spread: %0.3g \x00B1 %0.3g\ny spread: %0.3g \x00B1 %0.3g\nz: %0.3g',x0,a,y0,b,z0)
-    text(z0,x0-3*0.0254,y0,str1)
+    %text(z0,x0-3*0.0254,y0,str1)
 
     %computeInitialVelocity3DPlot(z0,x0,y0)
     % Store handle to trajectory for legend
     plot_handles(file_n) = computeInitialVelocity3DPlot_w_offset(z0, x0, y0, z_o,x_o,y_o,colors(file_n,:));
 end
+
+% plotting addiotnal lines for the black targe vessel 
+plot_handles(end-1) = plot3([0 3.5],[0 0],[.76 .76],'LineWidth',2);
+
+plot_handles(end) = plot3([.508 .508],[0 0],[0 .76],'LineWidth',2);
+
+
 hold off;
 
 % === Axis Limits Based on Offset ===
