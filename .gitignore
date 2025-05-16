@@ -6,6 +6,8 @@
 *.lnk
 *.mp4
 
+solidworks/
+
 computer_vision/cvenv/
 
 # Byte-compiled / optimized / DLL files
