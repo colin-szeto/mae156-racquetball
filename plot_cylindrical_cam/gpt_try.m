@@ -5,9 +5,9 @@ load('dxf_arcs.mat')
 load('dxf_lines.mat')
 
 % Set up figure
-figure; hold on; axis equal;
-title_handle = title('DXF Plot');
-xlabel_handle = xlabel('X');
+figure; hold on; %axis equal;
+title_handle = title('Axial Posititon');
+xlabel_handle = xlabel('\theta (degrees)');
 ylabel('Linear travel (mm)');
 %grid on
 
@@ -108,7 +108,7 @@ function plot_dxf(offset, lines_struct, arcs)
     for i = 1:length(lines_struct)
         l = lines_struct(i);
         plot([l.x1 + offset, l.x2 + offset], ...
-             [l.y1 - y_offset, l.y2 - y_offset], 'g-','LineWidth',2);
+             [l.y1 - y_offset, l.y2 - y_offset],'LineWidth',2,'Color',[0 128/255 0]);
     end
 
     for i = 1:length(arcs)
@@ -116,7 +116,7 @@ function plot_dxf(offset, lines_struct, arcs)
         theta = linspace(a.start_angle, a.end_angle, 100);
         x = a.cx + a.r * cosd(theta);
         y = a.cy + a.r * sind(theta);
-        plot(x + offset, y - y_offset, 'r-','LineWidth',2);
+        plot(x + offset, y - y_offset, '-','LineWidth',2,'Color',[0 128/255 0]);
 
         % Connector to root of next arc
         if i < length(arcs)
@@ -129,7 +129,7 @@ function plot_dxf(offset, lines_struct, arcs)
             y_root = min(next_y);
 
             plot([end_x + offset, end_x + offset], ...
-                 [end_y - y_offset, y_root - y_offset], 'k--','LineWidth',2);
+                 [end_y - y_offset, y_root - y_offset], '-','LineWidth',2,'Color',[232/255 173/255 35/255]);
         end
     end
 end

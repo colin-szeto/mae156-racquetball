@@ -49,3 +49,19 @@ subplot(5,1,5)
 plot(s_unique, jerk_s, 'k','LineWidth',2); ylabel('Jerk'); xlabel('Follower travel s (mm)'); grid on;
 
 sgtitle('Cylindrical Cam Kinematics for 120° Rise Segment');
+
+
+r_cyl = 30; % [mm] radius of cylindrical cam (adjust as needed)
+
+phi = atan(v ./ r_cyl);         % Pressure angle in radians
+phi_deg = rad2deg(phi);         % Convert to degrees
+
+
+
+figure;
+plot(theta_deg, phi_deg, 'LineWidth', 2);
+xlabel('\theta [°]');
+ylabel('Pressure Angle [°]');
+title('Pressure Angle for Cylindrical Cam');
+grid on; box on;
+
